@@ -588,6 +588,10 @@ class XiaomiRoborockVacuum {
       token: this.config.token,
     });
 
+    // Make sure `this.device` exists before calling any of the methods
+    const callbackify = (fn, cb) =>
+      device ? callbackifyLib(fn, cb) : cb(new Error("Not connected yet"));
+
     if (device.matches('type:vaccuum')) {
       this.device = device;
 
@@ -645,7 +649,7 @@ class XiaomiRoborockVacuum {
           this.log.WARN(`WRN stateChanged | ${this.model} | Not supported stateChanged event: ${state.key}=${state.value}`);
         }
       });
-      
+
       await this.getState();
       // Refresh the state every 30s so miio maintains a fresh connection (or recovers connection if lost until we fix https://github.com/homebridge-xiaomi-roborock-vacuum/homebridge-xiaomi-roborock-vacuum/issues/81)
       clearInterval(this.getStateInterval);
