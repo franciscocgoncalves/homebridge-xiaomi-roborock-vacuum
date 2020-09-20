@@ -33,6 +33,24 @@
         "default": false,
         "required": true
       },
+      "pauseWord": {
+        "title": "Pause Word",
+        "type": "string",
+        "default": "pause",
+        "required": true
+      },
+      "findMe": {
+        "title": "Show switch for \"find me\"",
+        "type": "boolean",
+        "default": false,
+        "required": true
+      },
+      "findMeWord": {
+        "title": "Find Me Word",
+        "type": "string",
+        "default": "where are you",
+        "required": true
+      },
       "dock": {
         "title": "Show Dock sensor",
         "type": "boolean",
@@ -48,7 +66,7 @@
       "cleanword": {
         "title": "Cleaning Word",
         "type": "string",
-        "default": "clean",
+        "default": "cleaning",
         "required": true
       },
       "autoroom": {
@@ -86,11 +104,24 @@
           "properties": {
             "name": {
               "name": "Name",
-              "type": "string"
+              "type": "string",
+              "required": true
             },
             "zone": {
-              "name": "Zone",
-              "type": "string"
+              "name": "Zone's Coordinates",
+              "required": true,
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "title": "Coordinates (Bottom-Left X, Bottom-Left Y, Top-Right X, Top-Right Y, # Repeats)",
+                "type": "array",
+                "minItems": 5,
+                "maxItems": 5,
+                "items": {
+                  "type": "number",
+                  "required": true
+                }
+              }
             }
           }
         }
@@ -109,6 +140,9 @@
     },
     "waterBox",
     "pause",
+    "pauseWord",
+    "findMe",
+    "findMeWord",
     "dock",
     "delay",
     "cleanword",
@@ -168,14 +202,26 @@
                 {
                   "key": "zones[].name",
                   "flex": "1 1 100px",
-                  "notitle": true,
                   "placeholder": "Zone Name"
                 },
                 {
                   "key": "zones[].zone",
-                  "flex": "4 4 150px",
                   "notitle": true,
-                  "placeholder": "Zone Parameter"
+                  "flex": "4 4 150px",
+                  "type": "array",
+                  "items": [
+                    {
+                      "key": "zones[].zone[]",
+                      "type": "array",
+                      "displayFlex": true,
+                      "flex-direction": "row",
+                      "items": [
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }
