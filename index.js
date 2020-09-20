@@ -645,13 +645,7 @@ class XiaomiRoborockVacuum {
           this.log.WARN(`WRN stateChanged | ${this.model} | Not supported stateChanged event: ${state.key}=${state.value}`);
         }
       });
-
-      // Now that we know the model, amend the steps in the Rotation speed (for better usability)
-      const minStep = 100 / (this.findSpeedModes().speed.length - 1);
-      this.services.fan
-        .getCharacteristic(Characteristic.RotationSpeed)
-        .setProps({ minStep: minStep });
-
+      
       await this.getState();
       // Refresh the state every 30s so miio maintains a fresh connection (or recovers connection if lost until we fix https://github.com/homebridge-xiaomi-roborock-vacuum/homebridge-xiaomi-roborock-vacuum/issues/81)
       clearInterval(this.getStateInterval);
