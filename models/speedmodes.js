@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-module.exports = {
+const SPEEDMODES = {
   gen1: [
     // 0%      = Off / Aus
     {
